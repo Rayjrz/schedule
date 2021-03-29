@@ -1,4 +1,4 @@
-# mpi-room-schedule
+# MPI Course Catalog Enquiry System
 
 ## Project setup
 
@@ -6,6 +6,7 @@ Install Dependencies
 
 ```
 yarn install
+yarn install crc
 ```
 
 Edit environment variable
