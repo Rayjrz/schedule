@@ -2,17 +2,17 @@
 
 ## Project setup
 
+Edit environment variable
+
+```
+cp .env.example .env.local
+```
+
 Install Dependencies
 
 ```
 yarn install
 yarn add crc
-```
-
-Edit environment variable
-
-```
-cp .env.example .env.local
 ```
 
 ### Compiles and hot-reloads for development
