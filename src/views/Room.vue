@@ -2,6 +2,7 @@
   <a-layout>
   <!-- a-row :gutter="[16, 16]" type="flex" justify="space-between">
     <a-col>
+
       <a-button-group>
         <a-button>&lt;</a-button>
         <a-button>&gt;</a-button>
@@ -15,7 +16,10 @@
     </a-col>
   </a-row -->
 
+
   <a-card>
+      <h3>{{tmp}}</h3>    
+      <hr>
     <div class="loading-overlay" v-if="loading">
       <a-spin v-if="!errorLoading"/>
       <div v-else>
@@ -26,6 +30,9 @@
     <vue-cal 
       class="vuecal-theme"
       style="margin: -24px"
+      :time-from="9 * 60"
+      :time-to="20 * 60"
+      :time-step="30"
       :disable-views="['years', 'year', 'month']"
       @view-change="onCalendarViewChange"
       :events="events"/>
@@ -49,7 +56,8 @@ export default {
       loading: true,
       errorLoading: false,
       filter: null,
-      schedule: []
+      schedule: [],
+      tmp:null
     }
   },
   components: {
@@ -76,6 +84,7 @@ export default {
   },
   mounted () {
     this.loadSchedule()
+    //this.tmp=crc32('A301'+'MPI_TIMESCHEDULE').toString(16).toUpperCase();
   },
   methods: {
     onCalendarViewChange(evt) {
@@ -90,9 +99,12 @@ export default {
     ...mapMutations([
       'setRoom'
     ]),
+    getCrc(){
+      //return crc32('A301').toString(16).toUpperCase();
+    },
     loadSchedule () {
       const roomNumber = this.$route.params.number
-      if (this.$route.params.hashcode.toString(16).toUpperCase() == crc32(roomNumber).toString(16).toUpperCase()){
+      if (this.$route.params.hashcode.toUpperCase() == crc32(roomNumber + "MPI_TIMESCHEDULE").toString(16).toUpperCase()){
       this.setRoom(roomNumber)
       this.loading = true
       this.errorLoading = false
@@ -117,7 +129,7 @@ export default {
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(0,0,0,0.1);
+  background: rgba(20, 184, 102,0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -125,12 +137,17 @@ export default {
 
 .vuecal-theme {
   box-shadow: unset;
-    .vuecal__menu, .vuecal__cell-events-count {background-color: #fff; }
-      .vuecal__menu li.active {background-color: #fff;}
-        .vuecal__title, .vuecal__title-bar {background-color: #fff;}
-          .vuecal__cell.today, .vuecal__cell.current {background-color: rgba(240, 240, 255, 0.4);}
-            &:not(.vuecal--day-view) .vuecal__cell.selected {background-color: rgba(255, 236, 202, 0.4);}
-              .vuecal__cell.selected:before {border-color: rgba(235, 216, 182, 0.5);}
+/* Green-theme. */
+.vuecal__menu, .vuecal__cell-events-count {background-color: #42b983;}
+.vuecal__title-bar {background-color: #e4f5ef;}
+.vuecal__cell--today, .vuecal__cell--current {background-color: rgba(211, 255, 117, 0.4);}
+.vuecal:not(.vuecal--day-view) .vuecal__cell--selected {background-color: rgba(235, 255, 245, 0.4);}
+.vuecal__cell--selected:before {border-color: rgba(66, 185, 131, 0.5);}
+/* Cells and buttons get highlighted when an event is dragged over it. */
+.vuecal__cell--highlighted:not(.vuecal__cell--has-splits),
+.vuecal__cell-split--highlighted {background-color: rgba(195, 255, 225, 0.5);}
+.vuecal__arrow.vuecal__arrow--highlighted,
+.vuecal__view-btn.vuecal__view-btn--highlighted {background-color: rgba(136, 236, 191, 0.25);}
               
 }
 </style>
