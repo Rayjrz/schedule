@@ -6,7 +6,7 @@ Install Dependencies
 
 ```
 yarn install
-yarn install crc
+yarn add crc
 ```
 
 Edit environment variable
