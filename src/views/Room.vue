@@ -31,7 +31,7 @@
       class="vuecal-theme"
       style="margin: -24px"
       :time-from="9 * 60"
-      :time-to="20 * 60"
+      :time-to="24 * 60"
       :time-step="30"
       :disable-views="['years', 'year', 'month']"
       @view-change="onCalendarViewChange"
